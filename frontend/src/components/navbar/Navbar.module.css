@@ -1,0 +1,128 @@
+@import "/src/styles/variables.css";
+
+.navbarWindow {
+  position: fixed;
+  top: 0vh; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: 10vh;
+  background-color: var(--background);
+  z-index: 20;
+  border-bottom: 1px solid var(--dividers);
+}
+
+.navbarContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: rgba(99, 99, 99, 0.3); */
+  /* border: 1.5px solid rgba(222, 222, 222, 0.3); 
+  border-radius: 4vh; 
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
+  box-sizing: border-box;*/
+}
+
+.navbarLogo {
+  color: var(--main-text);
+  text-decoration: none;
+  list-style: none;
+}
+
+.navbarLogo li a {
+  color: var(--main-text);
+  text-decoration: none;
+}
+
+.logoImg {
+  height: 7vh;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.navbarLeft {
+  display: flex;
+  align-items: center;
+  margin-left: 5vh;
+  padding: 2vh 2.5vh;
+
+}
+
+.navbarRight {
+  display: flex;
+  align-items: center;
+  margin-right: 5vh;
+}
+
+.navbarLinks {
+  position: relative;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.highlight {
+  position: absolute;
+  top: 0;
+  width: calc(100% / 3);
+  height: 100%;
+  background-color: rgba(42, 42, 42, 0.6);
+  border-radius: 2.5vh;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  will-change: left, width, opacity;
+}
+
+.navbarLinks li {
+  position: relative;
+  z-index: 1;
+  padding: 2vh 2.5vh;
+  font-size: large;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbarLinks a {
+  color: var(--main-text);
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1;  
+  
+}
+
+.navbarLinks:hover .highlight {
+  opacity: 1;
+}
+
+.navbarLinks li:nth-child(1):hover ~ .highlight {
+  left: 0;
+  width: calc(100% / 3);
+  opacity: 1;
+}
+
+.navbarLinks li:nth-child(2):hover ~ .highlight {
+  left: calc(100% / 3);
+  width: calc(100% / 3);
+  opacity: 1;
+}
+
+.navbarLinks li:nth-child(3):hover ~ .highlight {
+  left: calc(200% / 3);
+  width: calc(100% / 3);
+  opacity: 1;
+}
+
+.activeLink {
+  color: var(--accents);
+  
+}

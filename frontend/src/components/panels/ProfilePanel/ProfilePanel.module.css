@@ -1,0 +1,71 @@
+.profileContainer {
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  color: rgb(235, 235, 235);
+  padding-top: 14vh;
+  z-index: 20;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  background-color: rgba(43, 30, 42, 0.3);
+  border: 1.5px solid rgba(222, 222, 222, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid gold;
+}
+
+.userInfo h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.userTag {
+  margin: 0.3rem 0;
+  color: #bbb;
+}
+
+.editBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.8);
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.editBtn:hover {
+  background: rgba(212, 175, 55, 1);
+}
+
+.profileContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: rgba(99, 99, 99, 0.2);
+  border: 1px solid rgba(222, 222, 222, 0.2);
+  border-radius: 15px;
+  padding: 1rem;
+  min-height: 150px;
+  text-align: center;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
+}

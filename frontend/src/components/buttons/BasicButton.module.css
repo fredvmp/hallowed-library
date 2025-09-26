@@ -1,0 +1,15 @@
+
+.wrapBasicButton {
+    border: 0.15em solid rgb(111, 6, 90, 0.3);
+    border-radius: 12px;
+    display:inline-block;
+    background-color: rgba(23, 49, 37, 0.7);
+    width: 7em;
+    margin: 0.5em
+}
+
+.wrapBasicButton:hover {
+    background-color: rgba(23, 49, 37, 0.3);
+
+}
+    
