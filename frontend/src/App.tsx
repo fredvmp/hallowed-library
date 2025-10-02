@@ -6,6 +6,7 @@ import TestPage from "./components/pages/testPage/testPage";
 import ProfilePage from "./components/pages/profilePage/ProfilePage";
 import PrivateRoute from "./routes/PrivateRoute";
 import "./styles/variables.css";
+import Library from "./components/library/Library";
 
 
 
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route index element={<StartupPage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="pruebas" element={<TestPage />} />
+        <Route path="library" element={<Library />} />
         <Route
           path="profile"
           element={
