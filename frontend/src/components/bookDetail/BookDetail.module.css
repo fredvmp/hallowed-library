@@ -1,0 +1,48 @@
+.container {
+  padding: 6rem;
+  padding-top: 8rem;
+  color: var(--main-text);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.image {
+  max-width: 500px;
+  border-radius: 8px;
+  height: auto;
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.authors {
+  font-size: 1.2rem;
+  color: var(--accents);
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: var(--dividers);
+  margin: 0.5rem 0;
+}
+
+.categories {
+  font-size: 0.9rem;
+  color: var(--dividers);
+}
+
+.description {
+  margin-top: 2rem;
+  line-height: 1.5;
+}

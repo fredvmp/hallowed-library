@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./ProfilePanel.module.css";
 
 // Interfaz para tipar la información de usuario
@@ -15,6 +16,7 @@ export default function ProfilePanel() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // useEffect para montar el componente
   useEffect(() => {
@@ -54,10 +56,15 @@ export default function ProfilePanel() {
     fetchProfile();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // eliminar el token guardado
+    navigate("/login"); // redirigir al login
+  };
+
   // Estados de carga y error
-  if (loading) return <p>Cargando perfil...</p>;
+  if (loading) return <p>Loading Profile...</p>;
   if (error) return <p>{error}</p>;
-  if (!user) return <p>No se pudo cargar el perfil.</p>;
+  if (!user) return <p>The profile could not be loaded.</p>;
 
   // Renderizado principal del perfil
   return (
@@ -76,7 +83,12 @@ export default function ProfilePanel() {
           <h2>{user.name}</h2>
           <p className={styles.userTag}>@{user.username}</p>
           <p>{user.email}</p>
-          <button className={styles.editBtn}>Edit profile</button>
+          <div className={styles.buttonGroup}>
+            <button className={styles.editBtn}>Edit profile</button>
+            <button className={styles.logoutBtn} onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
         </div>
       </section>
 

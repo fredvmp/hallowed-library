@@ -7,8 +7,7 @@ import ProfilePage from "./components/pages/profilePage/ProfilePage";
 import PrivateRoute from "./routes/PrivateRoute";
 import "./styles/variables.css";
 import Library from "./components/library/Library";
-
-
+import BookDetail from "./components/bookDetail/BookDetail";
 
 function App() {
   return (
@@ -17,11 +16,12 @@ function App() {
         <Route index element={<StartupPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="library" element={<Library />} />
+        <Route path="library/:id" element={<BookDetail />} />
         <Route
           path="profile"
           element={
             <PrivateRoute>
-            <ProfilePage />
+              <ProfilePage />
             </PrivateRoute>
           }
         />

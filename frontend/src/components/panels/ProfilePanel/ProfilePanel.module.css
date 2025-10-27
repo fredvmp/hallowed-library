@@ -38,6 +38,12 @@
   color: #bbb;
 }
 
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .editBtn {
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -51,6 +57,20 @@
 
 .editBtn:hover {
   background: rgba(212, 175, 55, 1);
+}
+
+.logoutBtn {
+  background-color: var(--warning);
+  color: var(--main-text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #8b0000; /* tono más oscuro */
 }
 
 .profileContent {

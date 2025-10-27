@@ -5,7 +5,7 @@ import logo from "../../images/hallowed_logo.png";
 
 const LINKS = [
   { label: "Home", path: "/" },
-  { label: "Login", path: "/login" },
+  /* { label: "Login", path: "/login" }, */
   { label: "Library", path: "/library" },
   { label: "Profile", path: "/profile" },
 ];

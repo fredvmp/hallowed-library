@@ -2,7 +2,7 @@ html,
 body,
 #root {
   height: 100%;
-  background-color: rgb(19, 19, 19);
+  background-color: var(--background);
   overflow: autoscroll;
   margin: 0 auto;
   justify-content: center;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Library.module.css";
+import { useSearchParams, Link } from "react-router-dom";
 
 interface BookDto {
   id?: string;
@@ -10,7 +11,9 @@ interface BookDto {
 
 const Library: React.FC = () => {
   const [books, setBooks] = useState<BookDto[]>([]);
-  const [query, setQuery] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get("q") || "";
+  const [query, setQuery] = useState<string>(initialQuery);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -43,11 +46,14 @@ const Library: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchAndSetBooks(query);
-  }, []);
+    if (initialQuery) {
+      fetchAndSetBooks(initialQuery);
+    }
+  }, [initialQuery]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSearchParams({ q: query });
     await fetchAndSetBooks(query);
   };
 
@@ -86,25 +92,27 @@ const Library: React.FC = () => {
           const key = book.id ?? `${book.title}-${idx}`;
 
           return (
-            <article key={key} className={styles.card}>
-              <div className={styles.imageWrapper}>
-                {book.thumbnail ? (
-                  <img
-                    src={book.thumbnail}
-                    alt={book.title}
-                    className={styles.image}
-                  />
-                ) : (
-                  <div className={styles.noImage}>No image available</div>
-                )}
-              </div>
-              <h3 className={styles.title}>{book.title}</h3>
-              <p className={styles.author}>
-                {book.authors && book.authors.length > 0
-                  ? book.authors.join(", ")
-                  : "Author unknown"}
-              </p>
-            </article>
+            <Link to={`/library/${key}`} key={key} className={styles.cardLink}>
+              <article className={styles.card}>
+                <div className={styles.imageWrapper}>
+                  {book.thumbnail ? (
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title}
+                      className={styles.image}
+                    />
+                  ) : (
+                    <div className={styles.noImage}>No image available</div>
+                  )}
+                </div>
+                <h3 className={styles.title}>{book.title}</h3>
+                <p className={styles.author}>
+                  {book.authors && book.authors.length > 0
+                    ? book.authors.join(", ")
+                    : "Author unknown"}
+                </p>
+              </article>
+            </Link>
           );
         })}
       </div>
