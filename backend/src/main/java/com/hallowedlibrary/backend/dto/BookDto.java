@@ -13,7 +13,7 @@ public record BookDto(
         String publishedDate,
         String description,
         List<String> categories,
-        String thumbnail,
+        String miniature,
         String isbn13,
         String isbn10
 

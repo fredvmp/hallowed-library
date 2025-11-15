@@ -8,6 +8,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import "./styles/variables.css";
 import Library from "./components/library/Library";
 import BookDetail from "./components/bookDetail/BookDetail";
+import MyLibraryPanel from "./components/MyLibrary/MyLibraryPanel";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="my-library" element={<MyLibraryPanel />} />
       </Routes>
 
       <Navbar />

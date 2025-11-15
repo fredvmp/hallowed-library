@@ -70,7 +70,7 @@
 }
 
 .logoutBtn:hover {
-  background-color: #8b0000; /* tono más oscuro */
+  background-color: #8b0000;
 }
 
 .profileContent {
@@ -88,4 +88,16 @@
   text-align: center;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(4px);
+}
+
+.subText {
+  margin-top: 0.3rem;
+  color: var(--accents);
+  font-size: 0.95rem;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.subTextAnimated {
+  transform: scale(1.18);
+  color: gold;
 }

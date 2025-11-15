@@ -16,7 +16,10 @@ export default function ProfilePanel() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [libraryCount, setLibraryCount] = useState<number>(0);
+  const [animateCount, setAnimateCount] = useState(false);
   const navigate = useNavigate();
+  
 
   // useEffect para montar el componente
   useEffect(() => {
@@ -44,7 +47,22 @@ export default function ProfilePanel() {
 
         // Guardar los datos de usuario
         const data = await res.json();
-        setUser(data); 
+        setUser(data);
+
+        const libraryRes = await fetch("http://localhost:8080/api/me/library", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (libraryRes.ok) {
+          const libraryData = await libraryRes.json();
+          setLibraryCount(libraryData.length);
+
+          // Activar animación (1 segundo)
+          setAnimateCount(true);
+          setTimeout(() => setAnimateCount(false), 600);
+        }
+
+
       } catch (err: any) {
         console.error(err);
         setError(err.message || "Error al cargar el perfil");
@@ -94,6 +112,20 @@ export default function ProfilePanel() {
 
       {/* Contenido del perfil */}
       <section className={styles.profileContent}>
+        <div
+          className={styles.card}
+          onClick={() => navigate("/my-library")}
+          style={{ cursor: "pointer" }}
+        >
+          <h3>❤️ My Library ❤️</h3>
+          <p
+            className={`${styles.subText} ${
+              animateCount ? styles.subTextAnimated : ""
+            }`}
+          >
+            {libraryCount} books
+          </p>
+        </div>
         <div className={styles.card}>📚 Reading Lists</div>
         <div className={styles.card}>✍️ Reviews</div>
         <div className={styles.card}>📊 Statistics</div>

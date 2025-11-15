@@ -6,7 +6,7 @@ interface BookDto {
   id?: string;
   title: string;
   authors: string[];
-  thumbnail?: string;
+  miniature?: string;
 }
 
 const Library: React.FC = () => {
@@ -16,6 +16,7 @@ const Library: React.FC = () => {
   const [query, setQuery] = useState<string>(initialQuery);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [favoritesSet, setFavoritesSet] = useState<Set<string>>(new Set());
 
   const fetchAndSetBooks = async (q: string) => {
     if (!q.trim()) {
@@ -45,7 +46,29 @@ const Library: React.FC = () => {
     }
   };
 
+  // Cargar favoritos del backend
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      (async () => {
+        try {
+          const res = await fetch("http://localhost:8080/api/me/library", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!res.ok) {
+            console.warn("Favorites could not be loaded:", res.status);
+            return;
+          }
+          const data: Array<{ volumeId: string }> = await res.json();
+          const favSet = new Set<string>(data.map((x) => x.volumeId));
+          setFavoritesSet(favSet);
+        } catch (err) {
+          console.error("Error loading favorites", err);
+        }
+      })();
+    }
+
     if (initialQuery) {
       fetchAndSetBooks(initialQuery);
     }
@@ -55,6 +78,104 @@ const Library: React.FC = () => {
     e.preventDefault();
     setSearchParams({ q: query });
     await fetchAndSetBooks(query);
+  };
+
+  const toggleFavorite = async (bookId: string) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to save favorites");
+      return;
+    }
+
+    const isFav = favoritesSet.has(bookId);
+    const newSet = new Set(favoritesSet);
+
+    try {
+      if (isFav) {
+        // Quitar de favoritos
+        await fetch(`http://localhost:8080/api/me/library/${bookId}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        newSet.delete(bookId);
+      } else {
+        // Añadir a favoritos
+        await fetch(`http://localhost:8080/api/me/library/${bookId}`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        newSet.add(bookId);
+      }
+      setFavoritesSet(newSet);
+    } catch (err) {
+      console.error("Error toggling favorite:", err);
+    }
+  };
+
+  // alternar botón favorito
+  const handleToggleFavorite = async (book: BookDto) => {
+    if (!book.id) {
+      console.warn("Book has no id, cannot favorite");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to save favorites");
+      return;
+    }
+
+    const alreadyFavorite = favoritesSet.has(book.id);
+    try {
+      if (alreadyFavorite) {
+        // DELETE
+        const res = await fetch(
+          `http://localhost:8080/api/me/library/${encodeURIComponent(book.id)}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (!res.ok) {
+          // no actualizar si falla
+          console.error("Failed to remove favorite", res.status);
+          return;
+        }
+        // actualizar set local
+        setFavoritesSet((prev) => {
+          const copy = new Set(prev);
+          copy.delete(book.id!);
+          return copy;
+        });
+      } else {
+        // POST
+        const res = await fetch("http://localhost:8080/api/me/library", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            volumeId: book.id,
+            title: book.title,
+            miniature: book.miniature,
+            authors: book.authors || [],
+          }),
+        });
+        if (!res.ok) {
+          console.error("Failed to add favorite", res.status);
+          return;
+        }
+        // OK -> actualizar set local
+        setFavoritesSet((prev) => {
+          const copy = new Set(prev);
+          copy.add(book.id!);
+          return copy;
+        });
+      }
+    } catch (err) {
+      console.error("Error updating favorite:", err);
+    }
   };
 
   return (
@@ -90,14 +211,15 @@ const Library: React.FC = () => {
       <div className={styles.grid}>
         {books.map((book, idx) => {
           const key = book.id ?? `${book.title}-${idx}`;
+          const isFav = book.id ? favoritesSet.has(book.id) : false;
 
           return (
-            <Link to={`/library/${key}`} key={key} className={styles.cardLink}>
-              <article className={styles.card}>
+            <article key={key} className={styles.card}>
+              <Link to={`/library/${key}`} className={styles.cardLink}>
                 <div className={styles.imageWrapper}>
-                  {book.thumbnail ? (
+                  {book.miniature ? (
                     <img
-                      src={book.thumbnail}
+                      src={book.miniature}
                       alt={book.title}
                       className={styles.image}
                     />
@@ -111,8 +233,21 @@ const Library: React.FC = () => {
                     ? book.authors.join(", ")
                     : "Author unknown"}
                 </p>
-              </article>
-            </Link>
+              </Link>
+
+              {/* Botón de favoritos */}
+              {book.id && (
+                <button
+                  className={`${styles.favoriteButton} ${
+                    isFav ? styles.active : ""
+                  }`}
+                  onClick={() => handleToggleFavorite(book)}
+                  title={isFav ? "Remove from favorites" : "Add to favorites"}
+                >
+                  {isFav ? "❤️" : "🤍"}
+                </button>
+              )}
+            </article>
           );
         })}
       </div>
