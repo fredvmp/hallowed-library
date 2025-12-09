@@ -34,8 +34,8 @@ public class BooksController {
     /**
      * Buscar libros
      * Parámetros:
-     *  - q (query libre) OR title / author / isbn
-     *  - startIndex, maxResults (paginación)
+     * - q (query libre) OR title / author / isbn
+     * - startIndex, maxResults (paginación)
      */
     @GetMapping("/search")
     public ResponseEntity<?> search(
@@ -44,17 +44,18 @@ public class BooksController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String isbn,
             @RequestParam(defaultValue = "0") int startIndex,
-            @RequestParam(defaultValue = "20") int maxResults
-    ) {
+            @RequestParam(defaultValue = "20") int maxResults) {
         try {
             String query;
             if (isbn != null && !isbn.isBlank()) {
                 query = "isbn:" + isbn;
             } else if ((title != null && !title.isBlank()) || (author != null && !author.isBlank())) {
                 StringBuilder sb = new StringBuilder();
-                if (title != null && !title.isBlank()) sb.append("intitle:").append(title.replace(" ", "+"));
+                if (title != null && !title.isBlank())
+                    sb.append("intitle:").append(title.replace(" ", "+"));
                 if (author != null && !author.isBlank()) {
-                    if (sb.length() > 0) sb.append("+");
+                    if (sb.length() > 0)
+                        sb.append("+");
                     sb.append("inauthor:").append(author.replace(" ", "+"));
                 }
                 query = sb.toString();
@@ -79,11 +80,31 @@ public class BooksController {
     public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {
             BookDto book = booksService.getBookById(id);
-            if (book == null) return ResponseEntity.notFound().build();
+            if (book == null)
+                return ResponseEntity.notFound().build();
             return ResponseEntity.ok(book);
         } catch (Exception e) {
             logger.error("Error getting book by id {}", id, e);
             return ResponseEntity.status(500).body("Error obteniendo libro: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Obtener un libro por ISBN (primer resultado).
+     */
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<?> getByIsbn(@PathVariable("isbn") String isbn) {
+        try {
+            List<BookDto> results = booksService.searchBooks("isbn:" + isbn, 0, 1);
+
+            if (results == null || results.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(results.get(0));
+        } catch (Exception e) {
+            logger.error("Error getting book by ISBN {}", isbn, e);
+            return ResponseEntity.status(500).body("Error obteniendo libro por ISBN: " + e.getMessage());
         }
     }
 }

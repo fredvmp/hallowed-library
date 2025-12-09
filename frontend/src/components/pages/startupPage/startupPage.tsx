@@ -1,17 +1,16 @@
 import { Rain } from "../../rain/Rain";
+import BookCarousel from "../../BookCarousel/BookCarousel";
 import styles from "./startupPage.module.css";
 
 function StartupPage() {
   return (
-    <>
-      <div className={styles.pageContainer}>
-        <Rain />
+    <div className={styles.pageContainer}>
+      <Rain />
 
-        <div className={styles.provisionalWrap}>
-          <h2>In progress...</h2>
-        </div>
+      <div className={styles.contentWrap}>
+        <BookCarousel />
       </div>
-    </>
+    </div>
   );
 }
 

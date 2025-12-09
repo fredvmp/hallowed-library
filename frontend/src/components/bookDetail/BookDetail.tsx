@@ -11,6 +11,8 @@ interface BookDto {
   publishedDate?: string;
   pageCount?: number;
   categories?: string[];
+  isbn13?: string;
+  isbn10?: string;
 }
 
 const BookDetail: React.FC = () => {
@@ -143,6 +145,8 @@ const BookDetail: React.FC = () => {
           <p className={styles.meta}>
             {book.publishedDate && <span>Published: {book.publishedDate}</span>}
             {book.pageCount && <span> · {book.pageCount} pages</span>}
+            {book.isbn13 && <span> · ISBN-13: {book.isbn13}</span>}
+            {book.isbn10 && <span> · ISBN-10: {book.isbn10}</span>}
           </p>
           {book.categories && (
             <p className={styles.categories}>
