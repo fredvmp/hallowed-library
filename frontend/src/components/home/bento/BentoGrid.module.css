@@ -1,0 +1,57 @@
+.bentoContainer {
+  width: 80%;
+  margin: 9em auto;
+  z-index: 5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 220px;
+  gap: 1.5rem;
+}
+
+/* TARJETA BASE */
+.card {
+  background: rgba(54, 54, 54, 0.4);
+  border-radius: 18px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card h3,
+.card p,
+.card span {
+  margin: 0.2em;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(191, 167, 90, 0.25);
+}
+
+/* GRID POSITIONS */
+.quote {
+  grid-column: span 2;
+}
+.library {
+  grid-column: span 1;
+}
+.stats {
+  grid-column: span 1;
+}
+.random {
+  grid-column: span 2;
+}
+.currents {
+  grid-column: 1 / -1;
+  min-height: 260px;
+}

@@ -19,7 +19,6 @@ const featuredISBNs = [
   "9788401389412",
   "9786070764745",
   "9788466658898",
-  
 ];
 
 const VISIBLE_RANGE = 2; // central + 2 -> 5 visibles
@@ -35,7 +34,7 @@ const BookCarousel: React.FC = () => {
         featuredISBNs.map(async (isbn) => {
           try {
             const res = await fetch(
-              `http://localhost:8080/api/books/isbn/${encodeURIComponent(isbn)}`
+              `http://localhost:8080/api/books/isbn/${encodeURIComponent(isbn)}`,
             );
             if (!res.ok) return null;
             const data = await res.json();
@@ -50,7 +49,7 @@ const BookCarousel: React.FC = () => {
             console.warn("Failed to load isbn", isbn, e);
             return null;
           }
-        })
+        }),
       );
 
       const filtered = results.filter((r): r is BookDto => r !== null);
@@ -105,7 +104,11 @@ const BookCarousel: React.FC = () => {
         };
 
         return (
-          <div key={book.id} className={styles.card} style={style}>
+          <div
+            key={book.id}
+            className={`${styles.card} ${offset === 0 ? styles.active : ""}`}
+            style={style}
+          >
             <div className={styles.imageWrapper}>
               <img
                 src={

@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  color: var(--main-text);
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--accents);
+  opacity: 0.85;
+}

@@ -1,6 +1,7 @@
 import { Rain } from "../../rain/Rain";
-import BookCarousel from "../../BookCarousel/BookCarousel";
+import BookCarousel from "../../home/BookCarousel/BookCarousel";
 import styles from "./startupPage.module.css";
+import BentoGrid from "../../home/bento/BentoGrid";
 
 function StartupPage() {
   return (
@@ -9,6 +10,7 @@ function StartupPage() {
 
       <div className={styles.contentWrap}>
         <BookCarousel />
+        <BentoGrid />
       </div>
     </div>
   );

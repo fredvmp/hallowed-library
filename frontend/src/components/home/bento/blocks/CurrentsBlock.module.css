@@ -1,0 +1,55 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+/* TÍTULO */
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--main-text);
+}
+
+/* GRID DE CORRIENTES */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.9rem;
+}
+
+/* BOTÓN */
+.button {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(191, 167, 90, 0.25);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.button:hover {
+  background: rgba(191, 167, 90, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ICONO */
+.icon {
+  font-size: 1.2rem;
+}
+
+/* TEXTO */
+.label {
+  font-size: 1rem;
+  color: var(--accents);
+  font-weight: 500;
+}

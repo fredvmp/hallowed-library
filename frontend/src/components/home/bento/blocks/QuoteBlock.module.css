@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 1.8rem;
+  color: var(--main-text);
+  max-width: 100%;
+}
+
+.author {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accents);
+  opacity: 0.85;
+}
